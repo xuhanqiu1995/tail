@@ -148,8 +148,8 @@ func (tail *Tail) Tell() (offset int64, err error) {
 		return
 	}
 
-	tail.lk.Lock()
-	defer tail.lk.Unlock()
+	//tail.lk.Lock()
+	//defer tail.lk.Unlock()
 	if tail.reader == nil {
 		return
 	}
@@ -208,9 +208,9 @@ func (tail *Tail) reopen() error {
 }
 
 func (tail *Tail) readLine() (string, error) {
-	tail.lk.Lock()
+	//tail.lk.Lock()
 	line, err := tail.reader.ReadString('\n')
-	tail.lk.Unlock()
+	//tail.lk.Unlock()
 	if err != nil {
 		// Note ReadString "returns the data read before the error" in
 		// case of an error, including EOF, so we return it as is. The
@@ -241,7 +241,7 @@ func (tail *Tail) tailFileSync() {
 	// Seek to requested location on first open of the file.
 	if tail.Location != nil {
 		_, err := tail.file.Seek(tail.Location.Offset, tail.Location.Whence)
-		tail.Logger.Printf("Seeked %s - %+v\n", tail.Filename, tail.Location)
+		//tail.Logger.Printf("Seeked %s - %+v\n", tail.Filename, tail.Location)
 		if err != nil {
 			tail.Killf("Seek error on %s: %s", tail.Filename, err)
 			return
